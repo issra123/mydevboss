@@ -244,8 +244,20 @@ console.log(decode());</pre>
   <div id="giftLocation" class="screen">
     <h2>🎁 Gift Location Unlocked</h2>
     <p>Your mission: Find the surprise at <strong>Her Home</strong>.</p>
-    <button onclick="next('finalChallenge')">Proceed to Final Challenge</button>
+<button onclick="next('giftReveal')">Reveal the Gift</button>
   </div>
+  <!-- 🎁 Gift Reveal Page -->
+<div id="giftReveal" class="screen">
+  <h2>🎉 Surprise Gift Unlocked!</h2>
+  <div style="text-align:center; margin: 20px 0;">
+    <img src="https://media.giphy.com/media/xTiTnqUxyWbsAXq7Ju/giphy.gif" alt="Gift Reveal" style="max-width: 100%; height: auto; border-radius: 10px;" />
+  </div>
+  <p style="text-align:center;">This gift is just a small piece of how much I love you ❤️</p>
+  <div style="text-align:center;">
+    <button onclick="next('letter')">Proceed to Letter</button>
+  </div>
+</div>
+
 
   <div id="finalChallenge" class="screen">
     <h2>FINAL CHALLENGE</h2>
