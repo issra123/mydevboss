@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mission: Birthday Protocol</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      background: radial-gradient(circle at center, #0f0f0f, #000);
+      color: #00ffcc;
+      font-family: 'Share Tech Mono', monospace;
+      overflow-x: hidden;
+    }
+    .screen {
+      display: none;
+      padding: 40px;
+      max-width: 800px;
+      margin: 0 auto;
+      animation: fadeIn 1s ease-out forwards;
+    }
+    .active {
+      display: block;
+    }
+    h1, h2, h3 {
+      text-align: center;
+    }
+    button {
+      background: #00ffcc;
+      border: none;
+      color: black;
+      font-weight: bold;
+      padding: 10px 20px;
+      font-size: 18px;
+      margin-top: 20px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: 0.3s ease;
+    }
+    button:hover {
+      background: #00a98f;
+    }
+    input {
+      padding: 10px;
+      width: 100%;
+      font-size: 16px;
+      margin-top: 10px;
+      border-radius: 5px;
+      border: none;
+    }
+    .choice-img {
+      width: 45%;
+      height: 150px;
+      background: gray;
+      display: inline-block;
+      margin: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .choice-img:hover {
+      border: 2px solid #00ffcc;
+    }
+    #breakfastResult, #foodResult {
+      font-size: 28px;
+      font-weight: 900;
+      text-align: center;
+      margin-top: 20px;
+      color: #00ffcc;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .terminal {
+      background: black;
+      padding: 20px;
+      border-radius: 10px;
+      color: #00ffcc;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+<!-- Unlock Screen -->
+<div id="unlockScreen" class="screen active" style="padding:40px; max-width: 800px; margin:0 auto;">
+  <h1>> Enter Agent Code to Begin</h1>
+  <div class="terminal" style="background:black; color:#00ffcc; padding:20px; border-radius:10px; margin-top:20px;">
+    <p>> What would a true coder print if their heart had a variable named <code>who</code>?</p>
+    <pre>console.log("I love " + who);</pre>
+    <input id="unlockInput" placeholder="Type the output exactly..." />
+    <p id="unlockError" style="color:#f55; margin-top:10px;"></p>
+  </div>
+</div>
+
+  <div id="intro" class="screen hidden">
+    <h1>> Initiating Protocol...</h1>
+    <div class="terminal">
+      <p>> Booting secure environment...</p>
+      <p>> Authenticating agent...</p>
+      <p>> Agent recognized: <strong>Mahdi</strong></p>
+      <p>> Code: AGENT-<span id="agentCode"></span></p>
+      <p>> Mission: Birthday Protocol is LIVE</p>
+    </div>
+    <div style="text-align:center">
+      <p>📅 Date: Sunday 22</p>
+      <p>⏰ Be ready by: <strong>10:00 AM</strong></p>
+      <button onclick="next('breakfast')">Start</button>
+    </div>
+  </div>
+
+  <div id="breakfast" class="screen">
+    <h2>BREAKFAST DECODER</h2>
+    <p>Choose your breakfast energy pack</p>
+    <div style="text-align:center">
+      <div class="choice-img" onclick="chooseBreakfast(1)"></div>
+      <div class="choice-img" onclick="chooseBreakfast(2)"></div>
+    </div>
+    <p id="breakfastResult"></p>
+    <div id="breakfastNext" style="display:none; text-align:center">
+      <button onclick="next('waiting')">Proceed</button>
+    </div>
+  </div>
+
+  <div id="waiting" class="screen">
+    <h2>🔒 Waiting Room</h2>
+    <p>This part unlocks at <strong>3:00 PM</strong>.</p>
+    <p>You need to get ready for the mission.</p>
+    <p>🧥 Ask your girl to get you your outfit – don’t forget to match!</p>
+    <button onclick="next('extraChallenge')">(Debug to Unlock Now)</button>
+  </div>
+
+  <div id="extraChallenge" class="screen">
+    <h2>EXTRA CODING CHALLENGE</h2>
+    <p>Decode this to continue:</p>
+    <pre>
+function decode() {
+  const a = 'bi';
+  const b = 'rth';
+  const c = 'day';
+  return a + b + c;
+}
+console.log(decode());</pre>
+    <input id="extraInput" placeholder="Enter the output" />
+    <button onclick="checkExtraChallenge()">Submit</button>
+    <p id="extraResult"></p>
+  </div>
+
+  <div id="activityCoding" class="screen">
+    <h2>MISSION: Coding Unlock</h2>
+    <p>Choose your challenge:</p>
+    <button onclick="revealActivityChallenge(1)">Challenge 1</button>
+    <button onclick="revealActivityChallenge(2)">Challenge 2</button>
+    <button onclick="revealActivityChallenge(3)">Challenge 3</button>
+    <div id="codingChallenge"></div>
+    <div id="codingResult"></div>
+  </div>
+
+  <div id="activityPaintball" class="screen">
+    <h2>🎯 Activity Confirmed</h2>
+    <p>HEADSHOT PAINTBALL OPERATION</p>
+    <canvas id="paintballCanvas" width="400" height="200" style="display:block; margin: 20px auto; border: 3px solid #00ffcc; border-radius: 10px;"></canvas>
+    <p>Mission in progress...</p>
+    <div style="text-align:center">
+      <button onclick="next('mission4')">Done Playing</button>
+    </div>
+  </div>
+
+  <div id="mission4" class="screen">
+    <h2>MISSION 4: Energy Drop</h2>
+    <p>Select your fuel packet:</p>
+    <button onclick="revealFood(1)">1</button>
+    <button onclick="revealFood(2)">2</button>
+    <button onclick="revealFood(3)">3</button>
+    <p id="foodResult"></p>
+    <div id="foodBtn" style="display:none">
+      <button onclick="next('giftLocation')">Next Challenge</button>
+    </div>
+  </div>
+
+  <div id="giftLocation" class="screen">
+    <h2>🎁 Gift Location Unlocked</h2>
+    <p>Your mission: Find the surprise at <strong>Her Home</strong>.</p>
+    <button onclick="next('finalChallenge')">Proceed to Final Challenge</button>
+  </div>
+
+  <div id="finalChallenge" class="screen">
+    <h2>FINAL CHALLENGE</h2>
+    <p>Solve this code to unlock the letter:</p>
+    <pre>
+const part1 = 'he';
+const part2 = 'r';
+const part3 = 'ho' + 'me';
+console.log(part1 + part2 + part3);</pre>
+    <input id="inputFinal" placeholder="Enter the output" />
+    <button onclick="checkGiftCode()">Unlock Letter</button>
+    <p id="finalResult"></p>
+  </div>
+
+  <div id="letter" class="screen">
+    <h2>💌 From Your Girl</h2>
+    <p style="text-align:center; max-width:600px; margin: 0 auto;">
+      Today is special because you are special to me.<br>
+      You bring light and logic to my world every day.<br>
+      Watching you smile while solving puzzles is my favorite thing.<br>
+      I’m so proud of the man, the coder, and the human you are.<br>
+      I love you more with every mission we complete together. 💙
+    </p>
+  </div>
+
+  <script>
+unlockInput.addEventListener('input', () => {
+  const val = unlockInput.value.trim().toLowerCase();
+  if (val === 'i love israa') {
+    unlockError.textContent = "Correct! Loading...";
+    setTimeout(() => {
+      document.getElementById('unlockScreen').classList.remove('active');
+      document.getElementById('intro').classList.add('active');
+    }, 1000); // 1000 milliseconds = 1 second
+  } else {
+    unlockError.textContent = val.length === 0 ? '' : 'Incorrect phrase, try again.';
+  }
+});
+
+
+    function next(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    function chooseBreakfast(num) {
+      const result = num === 1 ? '🥙 Saj will be your breakfast' : '🍲 Fatteh will be your breakfast';
+      document.getElementById("breakfastResult").textContent = result;
+      document.getElementById("breakfastNext").style.display = "block";
+    }
+
+    function checkExtraChallenge() {
+      const val = document.getElementById("extraInput").value.toLowerCase().trim();
+      if (val === "birthday") {
+        document.getElementById("extraResult").textContent = "✔ Correct! Mission continues.";
+        setTimeout(() => next('activityCoding'), 1500);
+      } else {
+        document.getElementById("extraResult").textContent = "✖ Incorrect. Try again.";
+      }
+    }
+
+    function revealActivityChallenge(num) {
+      let challenge = [
+        'What does typeof NaN return?',
+        'What is the output of: Boolean([])?',
+        'What will this return: typeof null?'
+      ][num - 1];
+      document.getElementById("codingChallenge").innerHTML = `<p><strong>${challenge}</strong></p><input id='codeInput' placeholder='Your answer' /><button onclick='solveActivity()'>Submit</button>`;
+      document.getElementById("codingResult").textContent = "";
+    }
+
+    function solveActivity() {
+      const val = document.getElementById("codeInput").value.toLowerCase().trim();
+      const correctAnswers = ["number", "true", "object"];
+      if (correctAnswers.includes(val)) {
+        next('activityPaintball');
+      } else {
+        document.getElementById("codingResult").textContent = "❌ Incorrect. Try again.";
+      }
+    }
+
+    function revealFood(num) {
+      let food = ["🍝 Pasta", "🍕 Pizza", "🍗 Chicken Mushroom"][num - 1];
+      document.getElementById("foodResult").textContent = food;
+      document.getElementById("foodBtn").style.display = "block";
+    }
+
+    function checkGiftCode() {
+      const val = document.getElementById("inputFinal").value.toLowerCase().trim();
+      if (val === "herhome") {
+        document.getElementById("finalResult").textContent = "✔ Letter Unlocked!";
+        setTimeout(() => next('letter'), 1500);
+      } else {
+        document.getElementById("finalResult").textContent = "✖ Incorrect. Try again.";
+      }
+    }
+
+    const canvas = document.getElementById("paintballCanvas");
+    const ctx = canvas ? canvas.getContext("2d") : null;
+    let balls = [];
+
+    function randomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function createBalls() {
+      if (!ctx) return;
+      balls = [];
+      for(let i=0; i<15; i++) {
+        balls.push({
+          x: randomInt(20, 380),
+          y: randomInt(20, 180),
+          radius: randomInt(5, 12),
+          dx: (Math.random() - 0.5) * 2,
+          dy: (Math.random() - 0.5) * 2,
+          color: `hsl(${randomInt(0, 360)}, 100%, 60%)`
+        });
+      }
+    }
+
+    function drawBalls() {
+      if (!ctx) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      balls.forEach(ball => {
+        ctx.beginPath();
+        ctx.fillStyle = ball.color;
+        ctx.shadowColor = ball.color;
+        ctx.shadowBlur = 10;
+        ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        ball.x += ball.dx;
+        ball.y += ball.dy;
+
+        if(ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0) ball.dx = -ball.dx;
+        if(ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0) ball.dy = -ball.dy;
+      });
+      requestAnimationFrame(drawBalls);
+    }
+
+    function generateCode() {
+      const code = 'M' + Math.floor(1000 + Math.random() * 9000);
+      document.getElementById("agentCode").textContent = code;
+    }
+
+    generateCode();
+    createBalls();
+    drawBalls();
+  </script>
+</body>
+</html>
